@@ -1,0 +1,126 @@
+@use "sass:meta";
+@use "sass:map";
+@use "sass:math";
+@use "sass:list";
+@use "sizes" as *;
+@use "typography" as *;
+@use "theme" as *;
+
+@forward "theme";
+@forward "sizes";
+@forward "typography";
+
+@mixin desktop {
+  @media (width >= $APP_MAX_WIDTH) {
+    @content;
+  }
+}
+
+@mixin hover {
+  :global(.desktop) & {
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        @content;
+      }
+    }
+  }
+
+  :global(.mobile) & {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin animate($properties, $transitionTime: 0.2) {
+  $resultElements: ();
+
+  @each $property in $properties {
+    $resultElements: list.append($resultElements, $property #{$transitionTime}s ease);
+  }
+
+  transition: list.join($resultElements, (), comma);
+}
+
+@mixin square($side) {
+  width: $side;
+  height: $side;
+}
+
+@mixin hideScrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin verticalPadding($value) {
+  padding-top: $value;
+  padding-bottom: $value;
+}
+
+@mixin sidePadding($padding) {
+  padding-left: $padding;
+  padding-right: $padding;
+}
+
+@mixin verticalMargin($value) {
+  margin-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin styledLink {
+  text-decoration: underline;
+  color: var(--text-themed);
+
+  @include hover {
+    text-decoration: none;
+  }
+}
+
+@mixin fontTokens {
+  --family-base: #{$font-base} !important;
+  --font: #{$font-primary} !important;
+}
+
+/* stylelint-disable-next-line length-zero-no-unit */
+@function safe-bottom-offset($value: 0px) {
+  @return calc(env(safe-area-inset-bottom) + $value);
+}
+
+@mixin lineClamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin devButton {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-contrast);
+  background: var(--background-overlay-secondary);
+  opacity: 0.75;
+}
+
+@mixin pageBackground {
+  &#{&} {
+    background: var(--background-surface-ground);
+  }
+}
+
+$bg-image-set-base: "assets/images/pictureAssets" !default;
+
+@mixin bg-image-set($name, $ext: "png") {
+  $webp: 'type("image/webp")';
+
+  background: image-set(
+      url("#{$bg-image-set-base}/#{$name}_1x.webp") #{$webp} 1x,
+      url("#{$bg-image-set-base}/#{$name}_1x.#{$ext}") 1x,
+      url("#{$bg-image-set-base}/#{$name}_2x.webp") #{$webp} 2x,
+      url("#{$bg-image-set-base}/#{$name}_2x.#{$ext}") 2x
+    )
+    no-repeat center;
+}

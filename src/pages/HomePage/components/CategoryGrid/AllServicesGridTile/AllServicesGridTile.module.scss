@@ -1,0 +1,31 @@
+@use "styles/mixins" as *;
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin: 0;
+  padding: 12px 10px;
+
+  border: none;
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  background: var(--background-surface-card);
+  color: var(--text-primary);
+
+  @include desktop {
+    padding: 20px 16px;
+  }
+
+  @include hover {
+    opacity: 0.8;
+  }
+
+  &__label {
+    color: var(--text-primary);
+  }
+}

@@ -1,0 +1,32 @@
+@use "styles/mixins" as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+
+  padding: 12px 10px;
+
+  border-radius: 16px;
+
+  cursor: pointer;
+  width: 100%;
+
+  background: var(--background-surface-card);
+
+  @include hover {
+    opacity: 0.8;
+  }
+
+  &__icon-image {
+    @include square(48px);
+  }
+
+  &__name {
+    text-align: left;
+    color: var(--text-primary);
+
+    @include lineClamp(2);
+  }
+}

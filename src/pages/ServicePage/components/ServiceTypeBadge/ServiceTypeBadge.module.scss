@@ -1,0 +1,13 @@
+@use "styles/mixins" as *;
+
+.root {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 16px;
+
+  border-radius: 12px;
+
+  background: var(--background-surface-card);
+}

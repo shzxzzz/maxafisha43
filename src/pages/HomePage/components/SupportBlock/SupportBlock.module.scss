@@ -1,0 +1,20 @@
+@use "styles/mixins" as *;
+
+.root {
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  padding: 8px 0 safe-bottom-offset(16px);
+  background: var(--background-surface-card);
+
+  margin: 0 16px;
+
+  @include desktop {
+    border-radius: 12px;
+    padding: 8px 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+}

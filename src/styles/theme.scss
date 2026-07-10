@@ -1,0 +1,7 @@
+@use "sass:color";
+
+// NOTE! Использовать css переменные MAX UI
+// @link https://github.com/max-messenger/max-ui/blob/main/src/styles/variables/appearance.scss
+
+$bg-color: linear-gradient(180deg, #dfeeff 0%, #feffff 50%);
+$color-bg-accent: rgba(0, 122, 255, 0.1);

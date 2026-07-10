@@ -1,0 +1,60 @@
+@use "styles/mixins" as *;
+
+$sticky-z-index: 3;
+
+.root {
+  @include square(100%);
+
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  @include hideScrollbar;
+
+  @include pageBackground;
+
+  &_disabled {
+    pointer-events: none;
+  }
+}
+
+.title {
+  padding-top: var(--spacing-size-m);
+  padding-bottom: var(--spacing-size-m);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: $sticky-z-index;
+
+  width: 100%;
+  @include verticalPadding(var(--spacing-size-m));
+
+  background: var(--background-surface-primary);
+}
+
+.content {
+  $padding-bottom: 28px;
+
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  &_without-footer {
+    padding-bottom: safe-bottom-offset($padding-bottom);
+  }
+
+  &_loading {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.footer {
+  margin-top: auto;
+
+  width: 100%;
+  padding: var(--spacing-size-xl) 0;
+}

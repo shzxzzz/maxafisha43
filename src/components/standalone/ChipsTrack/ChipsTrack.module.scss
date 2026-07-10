@@ -1,0 +1,11 @@
+.root {
+  overflow: hidden;
+
+  :global(.swiper-slide) {
+    width: auto;
+  }
+
+  &__chip {
+    flex-shrink: 0;
+  }
+}

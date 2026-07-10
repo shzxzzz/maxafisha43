@@ -1,0 +1,14 @@
+.root {
+  overflow: visible;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    box-sizing: border-box;
+  }
+
+  &__chip {
+    flex-shrink: 0;
+  }
+}

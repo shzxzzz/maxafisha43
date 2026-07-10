@@ -1,0 +1,13 @@
+@use "sass:math";
+
+$BASE_REM_IN_PX: 16px;
+
+$MIN_BREAKPOINT: 320px;
+$MAX_BREAKPOINT: 1440px;
+
+// Высота инпута в max-ui
+$FIELD_HEIGHT: 52px;
+
+$TAB_HEIGHT: 40px;
+
+$APP_MAX_WIDTH: 687px;

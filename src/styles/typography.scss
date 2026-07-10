@@ -1,0 +1,31 @@
+// Конфиг шрифтов задан в файле tools/fonts/config.ts и используется конфиге vitejs для встраивания в index.html на этапе сборки
+// Здесь достаточно задать только набор font-family для переиспользования в стилях
+
+$font-primary: "Max Sans", sans-serif;
+$font-base: "SF Pro Text", sans-serif;
+$font-secondary: "VK Sans Display", sans-serif;
+
+/// Задает основной шрифт: **Max Sans**
+///
+/// @param {number} $weight
+///   Допустимые значения 400, 500, 600, 700
+@mixin font-primary($weight: 400) {
+  font-family: $font-primary;
+  font-weight: $weight;
+}
+
+/// Задает дополнительный шрифт: **VK Sans Display**
+///
+/// @param {number} $weight [500]
+///   Допустимые значения 400, 500, 600, 700
+@mixin font-secondary($weight: 500) {
+  font-family: $font-secondary;
+  font-weight: $weight;
+}
+
+/// Переопределяет шрифт --family-base на **VK Sans Display**
+@mixin font-secondary-override() {
+  &#{&} {
+    --family-base: #{$font-secondary};
+  }
+}

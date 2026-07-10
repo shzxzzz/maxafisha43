@@ -1,0 +1,18 @@
+@use "styles/mixins" as *;
+
+.carousel {
+  padding: 12px 0;
+
+  @include desktop {
+    display: none;
+  }
+}
+
+.wrap {
+  display: none;
+  padding: 12px 0;
+
+  @include desktop {
+    display: block;
+  }
+}

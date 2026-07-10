@@ -1,0 +1,18 @@
+@use "styles/mixins" as *;
+
+.root {
+  --vkui--color_background_contrast_themed: var(--background-neutral-floating-android);
+  --vkui--size_card_border_radius--regular: var(--size-border-radius-action-large);
+  --vkui--size_card_border_radius--compact: var(--size-border-radius-action-large);
+  --vkui--elevation4: none;
+  --vkui--color_text_primary: var(--text-contrast-static);
+  --vkui--font_paragraph--font_family--regular: #{$font-primary};
+  --vkui--font_paragraph--font_size--regular: var(--height-body-small);
+  --vkui--font_paragraph--font_weight--regular: 500;
+
+  &#{&} {
+    --vkui_internal--snackbar_in_padding: 20px;
+  }
+
+  color: var(--text-contrast-static);
+}

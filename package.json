@@ -1,0 +1,123 @@
+{
+  "name": "vk-mini-app-regiony-front",
+  "version": "1.0.0",
+  "main": "./main.tsx",
+  "author": "KTS",
+  "license": "MIT",
+  "scripts": {
+    "rm-public": "rm -rf ./public",
+    "rm-source-maps": "find ./public -name *.js.map -type f -delete",
+    "dev": "vite --port 8080 --host",
+    "validate": "tsx scripts/validate-config/index.ts",
+    "prebuild": "yarn validate",
+    "build": "yarn rm-public && vite build && yarn run rm-source-maps",
+    "preview": "vite preview --port 8080",
+    "tsc:check": "tsc --project tsconfig.json",
+    "lint": "eslint --ignore-path .gitignore . --ext ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint --ignore-path .gitignore . --ext ts,.tsx,.js,.jsx --fix ",
+    "stylelint": "stylelint --ignore-path .gitignore \"**/*.{css,scss}\"",
+    "stylelint:fix": "stylelint --ignore-path .gitignore \"**/*.{css,scss}\" --fix",
+    "format": "yarn lint:fix && yarn stylelint:fix",
+    "vk-tunnel": "vk-tunnel --insecure=0 --http-protocol=https --ws-protocol=wss --host=localhost --port=8080",
+    "check-circular-deps": "bash scripts/check-circular-deps.sh",
+    "check-circular-deps:json": "bash scripts/check-circular-deps-json.sh",
+    "precommit": "yarn check-circular-deps && yarn tsc:check && lint-staged",
+    "prepare": "husky",
+    "generate-picture-assets": "node --loader ts-node/esm tools/images/generate-picture-assets.mts"
+  },
+  "homepage": "./",
+  "commands": [
+    "yarn build"
+  ],
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,scss,css}": [
+      "yarn prettier --write"
+    ],
+    "*.{ts,js}?(x)": [
+      "yarn lint"
+    ],
+    "*.{scss,css}": [
+      "yarn stylelint"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not IE 11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 ie version"
+    ]
+  },
+  "dependencies": {
+    "@maxhub/max-ui": "0.1.12",
+    "@types/qs": "^6.14.0",
+    "@vkontakte/vkui": "7.11.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.16.5",
+    "history": "^5.3.0",
+    "mobx": "^6.11.0",
+    "mobx-react": "^9.1.0",
+    "qs": "^6.14.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.20.0",
+    "react-router-dom": "^6.20.0",
+    "smoothscroll-polyfill": "^0.4.4",
+    "swiper": "^12.1.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/lint": "^18.5.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.22",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "@vitejs/plugin-legacy": "^5.3.2",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "autoprefixer": "^10.4.19",
+    "commitlint-plugin-function-rules": "^3.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "glob": "^11.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "madge": "^8.0.0",
+    "postcss": "^8.4.38",
+    "postcss-styled-syntax": "^0.6.4",
+    "prettier": "^3.2.5",
+    "react-is": "^18.2.0",
+    "sass": "^1.72.0",
+    "sharp": "^0.33.5",
+    "stylelint": "^16.2.1",
+    "stylelint-config-recommended": "^14.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-declaration-strict-value": "^1.10.4",
+    "stylelint-prettier": "^5.0.0",
+    "stylelint-scss": "^6.2.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6",
+    "vite-plugin-checker": "^0.6.4",
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-svgr": "^4.2.0"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

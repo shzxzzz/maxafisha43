@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "useDefineForClassFields": true,
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "allowJs": false,
+
+    "moduleResolution": "Bundler",
+    "esModuleInterop": false,
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "typeRoots": ["node_modules/@types", "types"],
+    "baseUrl": "./src",
+    "paths": {
+      "components/*": ["components/*"],
+      "config/*": ["config/*"],
+      "pages/*": ["pages/*"],
+      "store/*": ["store/*"],
+      "styles/*": ["styles/*"],
+      "types/*": ["types/*"],
+      "utils/*": ["utils/*"]
+    }
+  },
+  "include": ["src"]
+}

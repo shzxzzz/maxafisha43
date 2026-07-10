@@ -1,0 +1,147 @@
+@use "styles/mixins" as *;
+
+.root {
+  gap: 12px;
+}
+
+.content {
+  gap: 12px;
+  padding: 0 12px 12px;
+}
+
+.back {
+  padding: 0 4px;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 280px;
+  border-radius: 24px;
+  background-color: #0f172a;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.14);
+  color: #ffffff;
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-tertiary: rgba(255, 255, 255, 0.72);
+  --text-themed: #ffffff;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(180deg, rgba(6, 10, 20, 0.12) 0%, rgba(6, 10, 20, 0.34) 46%, rgba(6, 10, 20, 0.8) 100%);
+  }
+
+  &__surface {
+    position: relative;
+
+    display: grid;
+    gap: 12px;
+
+    align-content: end;
+    min-height: 280px;
+    padding: 20px;
+  }
+
+  &__tag {
+    width: fit-content;
+
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+
+    font-size: var(--size-label-large);
+    line-height: var(--height-label-large);
+    letter-spacing: var(--letter-spacing-label-large);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__metaDate,
+  &__metaTime {
+    padding: 7px 10px;
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+
+    font-size: var(--size-label-large);
+    line-height: var(--height-label-large);
+    letter-spacing: var(--letter-spacing-label-large);
+  }
+
+  &__metaDate {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  &__metaTime {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &__title {
+    max-width: 22ch;
+  }
+
+  &__location {
+    max-width: 44ch;
+  }
+}
+
+.info {
+  display: grid;
+  gap: 12px;
+
+  padding: 16px;
+  border-radius: 24px;
+  background: var(--background-surface-primary);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+
+  &__text {
+    max-width: 60ch;
+    white-space: pre-line;
+  }
+}
+
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+
+  padding: 16px;
+  border-radius: 24px;
+  background: var(--background-surface-primary);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+@include desktop {
+  .content {
+    padding: 0 16px 16px;
+  }
+
+  .hero {
+    min-height: 320px;
+
+    &__surface {
+      min-height: 320px;
+      padding: 24px;
+    }
+  }
+
+  .info,
+  .empty {
+    padding: 20px;
+  }
+}

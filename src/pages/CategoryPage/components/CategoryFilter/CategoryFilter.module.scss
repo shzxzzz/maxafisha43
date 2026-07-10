@@ -1,0 +1,25 @@
+@use "styles/mixins" as *;
+
+.root {
+  padding: 12px 0;
+
+  &__chip_active {
+    &#{&} {
+      --MaxUi-Button_background: var(--states-background-pressed-transparent);
+    }
+  }
+}
+
+.carousel {
+  @include desktop {
+    display: none;
+  }
+}
+
+.wrap {
+  display: none;
+
+  @include desktop {
+    display: block;
+  }
+}

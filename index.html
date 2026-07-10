@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Сервисы региона</title>
+    <meta property="og:description" content="Сервисы региона" />
+
+    <!-- TODO: tune initial theme -->
+    <meta name="theme-color" content="#000" />
+
+    <!-- Подключение MAX Bridge -->
+    <script src="https://st.max.ru/js/max-web-app.js"></script>
+
+    <!-- vite-plugin-html injections -->
+    {|- INJECT_FONTS_PRELOAD_LINKS |}
+    <style>
+      {|- INJECT_FONTS_FACES |}
+    </style>
+
+  </head>
+  <body>
+    <!--
+      Включение tmr_debug для dev-режима,
+      чтобы в консоль выводились все события MyTracker.
+      Query параметр tmr_debug нужно добавлять перед инициализацией
+      MyTracker, т.к. его наличие проверяется при инициализации.
+    -->
+    <script type="text/javascript">
+      (function () {
+        var isDev = '{|- INJECT_IS_DEV |}';
+        var url = new URL(window.location.href);
+        if (isDev && !url.searchParams.has('tmr_debug')) {
+          url.searchParams.set('tmr_debug', '1');
+          window.location.replace(url.toString());
+        }
+      })();
+    </script>
+
+    <!--
+      Аналитика (MyTracker / Яндекс.Метрика) загружается динамически
+      через StatStore на основе region.json → analytics.
+    -->
+
+    <div id="root"></div>
+    <div id="modal"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

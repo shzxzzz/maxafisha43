@@ -1,0 +1,11 @@
+@use "styles/mixins" as *;
+
+.root {
+  height: 100%;
+
+  @include desktop {
+    max-width: $APP_MAX_WIDTH;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -1,0 +1,45 @@
+@import "styles/mixins";
+
+.root {
+  &__title {
+    display: block;
+    padding: 15px 16px 0;
+
+    text-transform: uppercase;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 8px;
+  }
+
+  &__nav {
+    flex-shrink: 0;
+
+    &#{&} {
+      color: var(--text-primary);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+    }
+  }
+
+  &__track {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 0 8px;
+  }
+
+  :global(.swiper-wrapper) {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+
+  :global(.swiper-slide) {
+    width: auto;
+  }
+}

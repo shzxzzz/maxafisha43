@@ -1,0 +1,33 @@
+@use "styles/mixins" as *;
+
+.root {
+  gap: 12px;
+  border-radius: 16px;
+
+  &#{&} {
+    padding: var(--spacing-size-xl);
+    background: var(--background-surface-card);
+  }
+
+  @include hover {
+    opacity: 0.8;
+  }
+
+  &__before {
+    &#{&} {
+      margin-right: 0;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__description {
+    padding-right: 16px;
+
+    @include lineClamp(2);
+  }
+}

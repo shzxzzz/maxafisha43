@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    text-transform: uppercase;
+
+    padding: 7px 4px;
+  }
+
+  &__tags {
+    padding: 4px;
+  }
+}
