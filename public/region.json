@@ -1,0 +1,431 @@
+{
+  "channels": [
+    {
+      "id": "channel-shapsha",
+      "name": "Владислав Шапша",
+      "description": "Официальный канал губернатора Калужской области.",
+      "icon": "shapsha.png",
+      "type": "chatbot",
+      "owner": "Правительство Калужской области",
+      "link": "https://max.ru/POMSH_RON_BOT",
+      "tags": ["губернатор", "новости", "власть"]
+    },
+    {
+      "id": "channel-razumovsky",
+      "name": "Дмитрий Разумовский",
+      "description": "Официальный канал заместителя губернатора.",
+      "icon": "razumovsky.png",
+      "type": "miniApp",
+      "owner": "Правительство Калужской области",
+      "link": "https://max.ru/minigame_test_bot"
+    },
+    {
+      "id": "channel-zaks",
+      "name": "Заксобрание Калужской области",
+      "description": "Официальный канал Законодательного Собрания Калужской области.",
+      "icon": "zaks.png",
+      "type": "form",
+      "owner": "Законодательное Собрание Калужской области",
+      "link": "https://forms.gle/pwNgQB6HZCcSbQNe6",
+      "category_ids": ["incidents"]
+    },
+    {
+      "id": "channel-mfc",
+      "name": "МФЦ Калужской области",
+      "description": "Многофункциональный центр предоставления государственных услуг.",
+      "icon": "mfc.png",
+      "type": "site",
+      "owner": "МФЦ Калужской области",
+      "link": "https://www.samregion.ru/",
+      "category_ids": ["social", "housing"]
+    },
+    {
+      "id": "channel-kaluga-news",
+      "name": "Калужские новости",
+      "description": "Новости Калуги и Калужской области.",
+      "icon": "news.png",
+      "type": "chatbot",
+      "owner": "Калужские новости",
+      "link": "https://max.ru/kaluganews",
+      "tags": ["новости", "регион"]
+    },
+    {
+      "id": "channel-kaluga-news-2",
+      "name": "Калужские новости",
+      "description": "Новости Калуги и Калужской области.",
+      "icon": "news.png",
+      "type": "chatbot",
+      "owner": "Калужские новости",
+      "link": "https://max.ru/kaluganews",
+      "tags": ["новости", "регион"]
+    },
+    {
+      "id": "channel-kaluga-news-3",
+      "name": "Калужские новости",
+      "description": "Новости Калуги и Калужской области.",
+      "icon": "news.png",
+      "type": "chatbot",
+      "owner": "Калужские новости",
+      "link": "https://max.ru/kaluganews",
+      "tags": ["новости", "регион"]
+    },
+    {
+      "id": "channel-kaluga-news-4",
+      "name": "Калужские новости",
+      "description": "Новости Калуги и Калужской области.",
+      "icon": "news.png",
+      "type": "chatbot",
+      "owner": "Калужские новости",
+      "link": "https://max.ru/kaluganews",
+      "tags": ["новости", "регион"]
+    },
+    {
+      "id": "channel-kaluga-news-5",
+      "name": "Калужские новости",
+      "description": "Новости Калуги и Калужской области.",
+      "icon": "news.png",
+      "type": "chatbot",
+      "owner": "Калужские новости",
+      "link": "https://max.ru/kaluganews",
+      "tags": ["новости", "регион"]
+    },
+    {
+      "id": "channel-kaluga-news-6",
+      "name": "Калужские новости",
+      "description": "Новости Калуги и Калужской области.",
+      "icon": "news.png",
+      "type": "chatbot",
+      "owner": "Калужские новости",
+      "link": "https://max.ru/kaluganews",
+      "tags": ["новости", "регион"]
+    }, 
+    {
+      "id": "kaluga-official-channel",
+      "name": "Калужская область | Официальный канал",
+      "description": "Официальный канал Правительства Калужской области с новостями, анонсами мероприятий и важной информацией для жителей региона.",
+      "icon": "news.png",
+      "type": "channel",
+      "owner": "Правительство Калужской области",
+      "link": "https://max.ru/channel/kaluga_official",
+      "tags": ["новости", "власть", "регион", "анонсы"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "housing",
+      "name": "Дом и ЖКХ",
+      "icon": "housing.png",
+      "show_on_main": true
+    },
+    {
+      "id": "family",
+      "name": "Семья и дети",
+      "icon": "family.png",
+      "show_on_main": true
+    },
+    {
+      "id": "transport",
+      "name": "Транспорт",
+      "icon": "transport.png",
+      "show_on_main": true
+    },
+    { "id": "health", "name": "Здоровье", "icon": "health.png", "show_on_main": true },
+    { "id": "culture", "name": "Культура", "icon": "culture.png", "show_on_main": true },
+    { "id": "education", "name": "Образование" },
+    { "id": "social", "name": "Соцподдержка" },
+    { "id": "ecology", "name": "Экология" },
+    { "id": "incidents", "name": "Происшествия" },
+    { "id": "business", "name": "Бизнес" },
+    { "id": "employment", "name": "Работа и занятость" },
+    { "id": "sport", "name": "Спорт" },
+    { "id": "tourism", "name": "Туризм" }
+  ],
+  "services": [
+    {
+      "id": "zhkh-emergency",
+      "name": "Аварийная служба ЖКХ",
+      "description": "Бот помогает быстро сообщить о коммунальной аварии и получить контакты ответственных служб (вода, отопление, электричество, лифт).",
+      "icon": "zhkh-emergency.png",
+      "type": "chatbot",
+      "owner": "Администрация Калужской области",
+      "link": "https://max.ru/bot/zhkh_kaluga",
+      "tags": ["коммуналка", "водоснабжение", "отопление", "авария"],
+      "category_ids": ["housing"],
+      "popular": true
+    },
+    {
+      "id": "mchs-region",
+      "name": "МЧС Региона",
+      "description": "Официальный бот экстренных уведомлений и рекомендаций при чрезвычайных ситуациях, погодных предупреждениях и других рисках.",
+      "icon": "mchs.png",
+      "type": "chatbot",
+      "owner": "ГУ МЧС по Калужской области",
+      "link": "https://max.ru/bot/mchs_kaluga",
+      "tags": ["МЧС", "чрезвычайная ситуация", "пожар"],
+      "category_ids": ["incidents"],
+      "popular": true,
+      "federal": true
+    },
+    {
+      "id": "water-online",
+      "name": "Водоканал Онлайн",
+      "description": "Бот предоставляет информацию о плановых и аварийных отключениях воды, а также принимает обращения жителей.",
+      "icon": "water-online.png",
+      "type": "chatbot",
+      "owner": "МУП Водоканал",
+      "link": "https://max.ru/bot/vodokanal_kaluga",
+      "tags": ["вода", "водоканал", "отключение"],
+      "category_ids": ["housing"]
+    },
+    {
+      "id": "road-incidents",
+      "name": "Дорожные происшествия",
+      "description": "Бот с информацией о перекрытиях дорог, авариях и временных изменениях движения транспорта.",
+      "icon": "road-incidents.png",
+      "type": "chatbot",
+      "owner": "Министерство транспорта Калужской области",
+      "link": "https://max.ru/bot/roads_kaluga",
+      "tags": ["дороги", "перекрытия", "ДТП"],
+      "category_ids": ["transport", "incidents"]
+    },
+    {
+      "id": "zashchitnik",
+      "name": "Защитник",
+      "description": "Предоставление информации о мерах поддержки, льготах и иной помощи участникам СВО и членам их семей в Калужской области",
+      "icon": "zashchitnik.png",
+      "type": "chatbot",
+      "owner": "Правительство Калужской области",
+      "link": "https://max.ru/bot/zashchitnik_kaluga",
+      "tags": ["поддержка", "льготы", "СВО"],
+      "category_ids": ["social", "family"],
+      "popular": true
+    },
+    {
+      "id": "eco-operator",
+      "name": "Экологический оператор",
+      "description": "Бот предоставляет актуальную информацию жителям Калужской области по вывозу мусора, позволяет задать вопрос и получить ответ напрямую от сотрудников предприятия, а также записаться на приём.",
+      "icon": "eco-operator.png",
+      "type": "chatbot",
+      "owner": "Региональный оператор по обращению с отходами Калужской области",
+      "link": "https://max.ru/bot/eco_kaluga",
+      "category_ids": ["ecology"]
+    },
+    {
+      "id": "sport-ministry",
+      "name": "Министерство спорта",
+      "description": "Запись на консультацию по реализации ИПРА. Записи в спортивные школы Калужской области для реализации ИПРА. Запись на физкультурные мероприятия.",
+      "icon": "sport-ministry.png",
+      "type": "chatbot",
+      "owner": "Министерство спорта Калужской области",
+      "link": "https://max.ru/bot/sport_kaluga",
+      "category_ids": ["sport", "health", "education", "family"]
+    },
+    {
+      "id": "wifi-points",
+      "name": "Точки WiFi",
+      "description": "Найди и подключись к бесплатным точкам доступа WiFi в парках и организациях",
+      "icon": "wifi-points.png",
+      "type": "chatbot",
+      "owner": "Правительство Калужской области",
+      "link": "https://max.ru/bot/wifi_kaluga",
+      "tags": ["WiFi", "интернет", "парки"],
+      "category_ids": ["culture"]
+    },
+    {
+      "id": "culture-tourism",
+      "name": "Культура и туризм",
+      "description": "Бот-путеводитель по культурной и туристической жизни Калужской области",
+      "icon": "culture-tourism.png",
+      "type": "chatbot",
+      "owner": "Министерство культуры Калужской области",
+      "link": "https://max.ru/bot/culture_kaluga",
+      "tags": ["культура", "туризм", "музеи"],
+      "category_ids": ["culture", "tourism"]
+    },
+    {
+      "id": "employment-trudvsem",
+      "name": "Работа в России",
+      "description": "Поиск вакансий, программы поддержки занятости и электронная запись в службу занятости.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минтруд России",
+      "link": "https://trudvsem.ru",
+      "tags": ["работа", "вакансии", "служба занятости"],
+      "category_ids": ["employment"],
+      "federal": true
+    },
+    {
+      "id": "test-gosuslugi",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["social"],
+      "popular": true,
+      "federal": true
+    },
+    {
+      "id": "test-edu-diary",
+      "name": "Электронный дневник",
+      "description": "Электронный дневник для учащихся школ Калужской области.",
+      "icon": "edu-diary.png",
+      "type": "site",
+      "owner": "Министерство образования Калужской области",
+      "link": "https://edu.kaluga.ru",
+      "tags": ["школа", "дневник", "оценки"],
+      "category_ids": ["education"]
+    },
+    {
+      "id": "test-minzdrav",
+      "name": "Запись к врачу",
+      "description": "Онлайн-запись на приём в поликлиники Калужской области.",
+      "icon": "minzdrav-kaluga.png",
+      "type": "site",
+      "owner": "Министерство здравоохранения Калужской области",
+      "link": "https://minzdrav.kaluga.ru",
+      "tags": ["врач", "поликлиника", "запись"],
+      "category_ids": ["health"],
+      "popular": true
+    },
+    {
+      "id": "test-gosuslugi-2",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["social"]
+    },
+    {
+      "id": "test-gosuslugi-3",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["housing"]
+    },
+    {
+      "id": "test-gosuslugi-4",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["transport"]
+    },
+    {
+      "id": "test-gosuslugi-5",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["health"]
+    },
+    {
+      "id": "test-gosuslugi-6",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["culture"]
+    },
+    {
+      "id": "test-gosuslugi-7",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["ecology"]
+    },
+    {
+      "id": "test-gosuslugi-8",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["incidents"]
+    },
+    {
+      "id": "test-gosuslugi-9",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["family"]
+    },
+    {
+      "id": "test-gosuslugi-10",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["education"]
+    },
+    {
+      "id": "test-gosuslugi-11",
+      "name": "Госуслуги",
+      "description": "Портал государственных услуг Российской Федерации.",
+      "icon": "gosuslugi.png",
+      "type": "site",
+      "owner": "Минцифры России",
+      "link": "https://www.gosuslugi.ru",
+      "tags": ["госуслуги", "документы"],
+      "category_ids": ["business"]
+    }
+  ],
+  "support": {
+    "chatbot": {
+      "name": "Чат-бот поддержки",
+      "description": "Автоматическое решение вопросов круглосуточно",
+      "link": "https://max.ru/bot/support_kaluga"
+    },
+    "operator": {
+      "name": "Чат с оператором",
+      "description": "Задайте вопрос и получите ответ в течение 24 часов",
+      "link": "https://max.ru/chat/operator_kaluga"
+    },
+    "techSupport": {
+      "name": "Форма обращения",
+      "description": "Отправьте свой вопрос в поддержку",
+      "link": "https://max.ru/chat/tech_support_kaluga"
+    }
+  },
+  "analytics": {
+    "mytracker": {
+      "enabled": true,
+      "trackerId": "3755075"
+    },
+    "yandexMetrika": {
+      "enabled": true,
+      "counterId": "85500886"
+    }
+  }
+}
