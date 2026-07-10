@@ -325,7 +325,15 @@ const extractCategory = (html: string): string => {
 };
 
 const fetchHtml = async (url: string): Promise<string> => {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: {
+      'accept-language': 'ru-RU,ru;q=0.9,en;q=0.8',
+      'cache-control': 'no-cache',
+      pragma: 'no-cache',
+      'user-agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    },
+  });
 
   if (!response.ok) {
     throw new Error(`Failed to load ${url} (${response.status})`);
@@ -369,7 +377,9 @@ const fetchPageItems = async (pagePath: string): Promise<TRawParsedItem[]> => {
 };
 
 const loadEvents = async (): Promise<TEventItem[]> => {
-  const sourcePages = await Promise.all(SOURCE_PAGES.map(async (pagePath) => fetchPageItems(pagePath)));
+  const sourcePages = (
+    await Promise.allSettled(SOURCE_PAGES.map(async (pagePath) => fetchPageItems(pagePath)))
+  ).flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []));
   const uniqueItems = new Map<string, TRawParsedItem>();
 
   for (const pageItems of sourcePages) {
