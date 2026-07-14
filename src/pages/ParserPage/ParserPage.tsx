@@ -17,6 +17,37 @@ const monthFormatter = new Intl.DateTimeFormat('ru-RU', {
 
 const DATE_FILTER_VISIBLE_MONTHS = 2;
 
+const CATEGORY_ORDER = [
+  'cinema',
+  'concert',
+  'standup',
+  'theatre',
+  'festival',
+  'exhibition',
+  'museum',
+  'lecture',
+  'excursion',
+  'masterclass',
+  'kids',
+  'other',
+] as const;
+
+const CATEGORY_LABELS: Record<(typeof CATEGORY_ORDER)[number] | 'all', string> = {
+  all: 'Все',
+  cinema: 'Кино',
+  concert: 'Концерт',
+  standup: 'Стендап',
+  theatre: 'Театр',
+  festival: 'Фестиваль',
+  exhibition: 'Выставка',
+  museum: 'Музей',
+  lecture: 'Лекция',
+  excursion: 'Экскурсия',
+  masterclass: 'Мастер-класс',
+  kids: 'Детям',
+  other: 'Другое',
+};
+
 const toLocalDateKey = (value: Date): string => {
   const year = value.getFullYear();
   const month = String(value.getMonth() + 1).padStart(2, '0');
@@ -27,15 +58,73 @@ const toLocalDateKey = (value: Date): string => {
 
 const capitalize = (value: string): string => value.charAt(0).toUpperCase() + value.slice(1);
 
+const getCategoryKey = (value: string): (typeof CATEGORY_ORDER)[number] => {
+  const normalized = value.trim().toLowerCase();
+
+  if (
+    normalized.includes('кино') ||
+    normalized.includes('фильм') ||
+    normalized.includes('кин')
+  ) {
+    return 'cinema';
+  }
+
+  if (normalized.includes('концерт') || normalized.includes('музык')) {
+    return 'concert';
+  }
+
+  if (normalized.includes('стендап') || normalized.includes('юмор') || normalized.includes('комед')) {
+    return 'standup';
+  }
+
+  if (normalized.includes('театр') || normalized.includes('спектак') || normalized.includes('постанов')) {
+    return 'theatre';
+  }
+
+  if (normalized.includes('фестиваль')) {
+    return 'festival';
+  }
+
+  if (normalized.includes('выстав')) {
+    return 'exhibition';
+  }
+
+  if (normalized.includes('музе')) {
+    return 'museum';
+  }
+
+  if (normalized.includes('лекц')) {
+    return 'lecture';
+  }
+
+  if (normalized.includes('экскурс')) {
+    return 'excursion';
+  }
+
+  if (normalized.includes('мастер') || normalized.includes('творческ')) {
+    return 'masterclass';
+  }
+
+  if (normalized.includes('дет')) {
+    return 'kids';
+  }
+
+  return 'other';
+};
+
 const ParserPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
   const [events, setEvents] = React.useState<TEventItem[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [selectedDate, setSelectedDate] = React.useState('');
+  const [selectedCategories, setSelectedCategories] = React.useState<Array<(typeof CATEGORY_ORDER)[number]>>([]);
   const [canScrollDatesBackward, setCanScrollDatesBackward] = React.useState(false);
   const [canScrollDatesForward, setCanScrollDatesForward] = React.useState(false);
+  const [canScrollCategoriesBackward, setCanScrollCategoriesBackward] = React.useState(false);
+  const [canScrollCategoriesForward, setCanScrollCategoriesForward] = React.useState(false);
   const datesTrackRef = React.useRef<HTMLDivElement>(null);
+  const categoriesTrackRef = React.useRef<HTMLDivElement>(null);
   const { push } = useRouterStore();
   const debouncedQuery = useDebounce(query, 180);
 
@@ -177,6 +266,32 @@ const ParserPage: React.FC = () => {
     });
   }, [events, normalizedQuery]);
 
+  const categoryCounts = React.useMemo(() => {
+    const counts = new Map<(typeof CATEGORY_ORDER)[number], number>();
+
+    for (const event of events) {
+      const categoryKey = getCategoryKey(event.category);
+      counts.set(categoryKey, (counts.get(categoryKey) ?? 0) + 1);
+    }
+
+    return counts;
+  }, [events]);
+
+  const orderedCategoryOptions = React.useMemo(() => {
+    const available = CATEGORY_ORDER.filter((categoryKey) => (categoryCounts.get(categoryKey) ?? 0) > 0);
+    const empty = CATEGORY_ORDER.filter((categoryKey) => (categoryCounts.get(categoryKey) ?? 0) === 0);
+
+    return ['all', ...available, ...empty] as const;
+  }, [categoryCounts]);
+
+  const visibleEvents = React.useMemo(() => {
+    if (selectedCategories.length === 0) {
+      return filteredEvents;
+    }
+
+    return filteredEvents.filter((event) => selectedCategories.includes(getCategoryKey(event.category)));
+  }, [filteredEvents, selectedCategories]);
+
   const handleSearchChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   }, []);
@@ -193,6 +308,74 @@ const ParserPage: React.FC = () => {
     setSelectedDate('');
     void loadEvents();
   }, [loadEvents]);
+
+  const handleCategorySelect = React.useCallback((categoryKey: 'all' | (typeof CATEGORY_ORDER)[number]) => {
+    if (categoryKey === 'all') {
+      setSelectedCategories([]);
+      return;
+    }
+
+    setSelectedCategories((current) =>
+      current.includes(categoryKey) ? current.filter((item) => item !== categoryKey) : [...current, categoryKey]
+    );
+  }, []);
+
+  const syncCategoryScrollButtons = React.useCallback(() => {
+    const container = categoriesTrackRef.current;
+
+    if (!container) {
+      setCanScrollCategoriesBackward(false);
+      setCanScrollCategoriesForward(false);
+      return;
+    }
+
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    const maxScrollLeft = Math.max(0, scrollWidth - clientWidth);
+
+    setCanScrollCategoriesBackward(scrollLeft > 4);
+    setCanScrollCategoriesForward(scrollLeft < maxScrollLeft - 4);
+  }, []);
+
+  React.useEffect(() => {
+    syncCategoryScrollButtons();
+
+    const container = categoriesTrackRef.current;
+
+    if (!container) {
+      return undefined;
+    }
+
+    const handleScroll = () => {
+      syncCategoryScrollButtons();
+    };
+
+    const handleResize = () => {
+      syncCategoryScrollButtons();
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [syncCategoryScrollButtons]);
+
+  const handleCategoryTrackScroll = React.useCallback((direction: 'backward' | 'forward') => {
+    const container = categoriesTrackRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const offset = Math.max(220, Math.round(container.clientWidth * 0.8));
+
+    container.scrollBy({
+      left: direction === 'backward' ? -offset : offset,
+      behavior: 'smooth',
+    });
+  }, []);
 
   const handleCardClick = React.useCallback(
     (eventItem: TEventItem) => {
@@ -282,6 +465,51 @@ const ParserPage: React.FC = () => {
               </Button>
             ) : null}
           </div>
+
+          <div className={s.header__categoriesRow}>
+            <IconButton
+              mode="secondary"
+              appearance="themed"
+              size="medium"
+              className={s.header__categoriesNav}
+              disabled={!canScrollCategoriesBackward}
+              aria-label="Прокрутить категории влево"
+              onClick={() => handleCategoryTrackScroll('backward')}
+            >
+              <Icon type={EIconType.arrowLeft} size={20} />
+            </IconButton>
+
+            <div ref={categoriesTrackRef} className={s.header__categories}>
+              {orderedCategoryOptions.map((categoryKey) => {
+                const isActive =
+                  categoryKey === 'all' ? selectedCategories.length === 0 : selectedCategories.includes(categoryKey);
+
+                return (
+                  <button
+                    key={categoryKey}
+                    type="button"
+                    className={`${s.categoryChip} ${isActive ? s.categoryChip_active : ''}`}
+                    aria-pressed={isActive}
+                    onClick={() => handleCategorySelect(categoryKey)}
+                  >
+                    {categoryKey === 'all' ? 'Все' : CATEGORY_LABELS[categoryKey]}
+                  </button>
+                );
+              })}
+            </div>
+
+            <IconButton
+              mode="secondary"
+              appearance="themed"
+              size="medium"
+              className={s.header__categoriesNav}
+              disabled={!canScrollCategoriesForward}
+              aria-label="Прокрутить категории вправо"
+              onClick={() => handleCategoryTrackScroll('forward')}
+            >
+              <Icon type={EIconType.arrowRight} size={20} />
+            </IconButton>
+          </div>
         </div>
       }
     >
@@ -313,7 +541,7 @@ const ParserPage: React.FC = () => {
             },
           }}
         >
-          {filteredEvents.length === 0 ? (
+          {visibleEvents.length === 0 ? (
             <div className={s.empty}>
               <Typography tag="headline" size="small" weight="strong">
                 Ничего не найдено
@@ -323,7 +551,7 @@ const ParserPage: React.FC = () => {
               </Typography>
             </div>
           ) : (
-            filteredEvents.map((eventItem) => (
+            visibleEvents.map((eventItem) => (
               <motion.article
                 key={eventItem.id}
                 className={s.card}
