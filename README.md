@@ -1,229 +1,141 @@
-# Сервисы региона — мини-приложение для Max
+# vk-mini
 
-Мини-приложение «Сервисы региона» агрегирует полезные сервисы, официальные каналы и новости региона в едином интерфейсе внутри платформы Max.
+Мини-приложение для просмотра событий Кировской области. Проект собирает афишу из нескольких источников, нормализует данные, кэширует результат и показывает пользователю единый список с поиском, фильтрами по датам и категориям, а также карточкой события.
 
-Условия использования. Материалы предоставлены ООО «МАХ» (ИНН 9714058267) и распространяются на условиях лицензии CC BY-NC-SA 4.0 International. Текст лицензии доступен по ссылке: https://creativecommons.org/licenses/by-nc-sa/4.0/. 
-- Обязательное указание правообладателя (BY);
-- Запрет коммерческого использования (NC);
-- Обязанность распространять производные материалы на тех же условиях (SA).
+## Что умеет приложение
 
-Важная информация: Организация, принимающая решение о внедрении данного исходного кода, несет полную ответственность за его функционирование и итоговую работоспособность.
+- собирает события из `Afisha`, `Cultura Kirov` и `Turkirov`
+- нормализует дату, время, место, описание и изображение
+- убирает дубли и сортирует события по времени
+- показывает список событий и страницу подробностей
+- позволяет искать по тексту
+- фильтрует по датам и тематическим категориям
+- использует кэш, чтобы не парсить источник повторно при каждом запросе
 
-## Документация
+## Страницы и маршруты
 
-- [Инструкция для региона: настройка мини-приложения](docs/region-instruction.md)
-- [Сборка и проверка мини-приложения](docs/region-build-guide.md)
-- [Справочник аналитики: события и настройка счётчиков](docs/analytics-events.md)
+- `/` и `/events` - список событий
+- `/events/:eventId` - подробная карточка события
 
-## Сборка production
+## Как устроен проект
 
-### Node.js
+Основная логика парсинга находится в `src/pages/ParserPage/backend/scraper.ts`.
 
-- **Версия**: Node.js 20.x
-- **Менеджер пакетов**: Yarn
+Источник данных проходит несколько этапов:
 
-### Установка зависимостей
+1. загрузка HTML или markdown-страниц из внешних источников;
+2. извлечение карточек событий;
+3. очистка и приведение полей к общему формату;
+4. дедупликация и сортировка;
+5. сохранение кэшированной версии в `static/parser-events-cache.json`.
+
+Для локальной разработки и preview доступны серверные обработчики:
+
+- `api/parser/events.ts`
+- `api/parser/events/[eventId].ts`
+
+Во время `vite dev` и `vite preview` они подключаются через плагин `src/pages/ParserPage/backend/plugin.ts`.
+
+## Технологии
+
+- React 18
+- TypeScript
+- Vite
+- React Router
+- MobX
+- Framer Motion
+- MaxUI
+- VKUI
+- Sass / CSS Modules
+
+## Требования
+
+- Node.js 20.x
+- Yarn 1.x
+
+## Установка
 
 ```bash
 yarn install
 ```
 
-### Команда сборки
+## Скрипты
+
+```bash
+yarn dev
+```
+
+Запуск приложения в режиме разработки на `http://localhost:8080`.
 
 ```bash
 yarn build
 ```
 
-### Результат сборки
+Сборка production-версии. Перед сборкой автоматически обновляется кэш событий.
 
-- **Папка**: `public/`
-- **Статические файлы**: `public/static/`
-- **HTML**: `public/index.html`
-- **JavaScript/CSS**: `public/static/` с хешированными именами файлов
-
-
-## Технологии
-
-- React
-- React Router v6
-- CSS Modules
-- Framer Motion
-- MobX
-- Typescript
-- Vite.js
-- Eslint + Prettier + Stylelint
-
-### Структура проекта
-
-```
-|vk-mini-app-regiony-front
-|--/src
-   |--/assets <- общие медиа файлы
-   |--/assets/images <- общие картинки
-   |--/build <- скрипты для внедрения на этапе сборки аппа
-   |--/build/fonts <- конфиги и скрипты для добавления и предзагрузки шрифтов
-   |--/components <- общие компоненты
-   |--/config <- общие конфиги
-   |--/pages <- компоненты-страниц приложения
-   |--/store <- mobx-сторы
-   |--/styles <- глобальные стили, общие миксины и переменные
-   |--/types <- глобальные типы
-   |--/utils <- общие утилиты
-   |--App.tsx <- главный компонент приложения
-   |- main.tsx <- точка входа в приложение
-|--/static <- папка со статикой, которая копируется при сборке
-|--/public <- папка со сборкой (создается при yarn build)
-|--index.html
+```bash
+yarn preview
 ```
 
-### Описание проекта
+Локальный предпросмотр собранной версии.
 
-На старте в [main.tsx](src/main.tsx) рендерится главный компонент приложения [App](src/App.tsx) в котором подключаются провайдеры глобальных контекстов (роутинг, рут-стор и т.д.).
-
-Навигация осуществляется с помощью [react-router v6](https://reactrouter.com/en/main/start/overview):
-
-- все пути приложения хранятся в конфиге [RoutePath](src/config/router/paths.ts)
-- структура роутинга описывается в объекте [ROUTER](src/config/router/router.tsx)
-- Компонент [RootLayoutPage](src/pages/RootLayoutPage/RootLayoutPage.tsx) рендерит страницы, которые передает роутер в виде `outlet` и анимирует переходы между ними с помощью компонента [AnimatePresence](https://www.framer.com/motion/animate-presence/) из библиотеки Framer Motion
-
-Также к проекту подключен [MobX](https://mobx.js.org/) и создан глобальный стор [RootStore](src/store/globals/RootStore/RootStore.ts), который может содержать любые подсторы.
-
-### Настройка шрифтов на сетапе проекта
-
-Для внедрения шрифтов используются конфиг [tools/fonts/config.ts](tools/fonts/config.ts):
-
-```typescript
-/*
-  например для файлов шрифтов `SF Pro Display` и `VK Sans Display`
-
-    path_or_url/to/font/SFProDisplay/SFProDisplay-Regular.woff
-    path_or_url/to/font/SFProDisplay/SFProDisplay-Regular.woff2
-    path_or_url/to/font/SFProDisplay/SFProDisplay-Bold.woff
-    path_or_url/to/font/SFProDisplay/SFProDisplay-Bold.woff2
-    path_or_url/to/font/VKSansDisplay/VKSansDisplay_Light.woff
-    path_or_url/to/font/VKSansDisplay/VKSansDisplay_Light.woff2
-    path_or_url/to/font/VKSansDisplay/VKSansDisplay_Medium.woff
-    path_or_url/to/font/VKSansDisplay/VKSansDisplay_Medium.woff2
-
-  конфиг может выглядеть так:
-*/
-
-export type Font = 'VK_SANS_DISPLAY' | 'SF_PRO_DISPLAY';
-
-export const FONT_PROPS: Record<Font, FontProps> = {
-  SF_PRO_DISPLAY: {
-    name: 'SF Pro Display',
-    genericFamily: 'sans-serif',
-    basePath: 'path_or_url/to/font/SFProDisplay/SFProDisplay',
-    variants: [
-      {
-        fileNamePostfix: '-Regular',
-        weight: 400,
-      },
-      {
-        fileNamePostfix: '-Bold',
-        weight: 700,
-      },
-    ],
-    formats: ['woff2'],
-    display: 'swap',
-  },
-  VK_SANS_DISPLAY: {
-    name: 'VK Sans Display',
-    genericFamily: 'sans-serif',
-    basePath: 'path_or_url/to/font/VKSansDisplay/VKSansDisplayy',
-    variants: [
-      {
-        fileNamePostfix: '_Light',
-        weight: 300,
-      },
-      {
-        fileNamePostfix: '_Medium',
-        weight: 500,
-      },
-    ],
-    formats: ['woff2'],
-    display: 'swap',
-  },
-};
+```bash
+yarn validate
 ```
 
-Заполненный конфиг с помощью утилит [src/build/fonts/utils.ts](src/build/fonts/utils.ts) преобразуется в ссылки для предзагрузки и наборы правил `@font-face`, которые на этапе сборки внедряются в шаблон страницы плагином `vite-plugin-html`
+Проверка конфигурации и данных для парсера.
 
-Для удобства использования шрифтов в стилях можно добавить простые миксины с ними в файл [src/styles/typography.scss](src/styles/typography.scss):
-
-```scss
-/// Задает основной шрифт: **SF Pro Display**
-///
-/// @param {number} $weight
-///   Допустимые значения 400, 700
-@mixin font-primary($weight: 400) {
-  font-family: 'SF Pro Display', sans-serif;
-  font-weight: $weight;
-}
+```bash
+yarn build-parser-cache
 ```
 
-### Особенности работы с SVG
+Ручная генерация `static/parser-events-cache.json`.
 
-Результат импортирования SVG файла зависит от наличия/отсутствия специального параметра в пути, и от его размера:
-
-- Для получения react-компонента в конец пути к файлу нужно добавить параметр `react`: `path/to/image.svg?react`
-- Без параметра в пути, в зависимости от размера файла, будет получена ссылка или base64-строка на изображение
-
-Для примера:
-
-```typescript
-import logoImg from 'assets/images/logo.svg';
-import LogoComponent from 'assets/images/logo.svg?react';
-
-const Demo: React.FC = () => (
-  <div>
-    <img src={logoImg} alt="logo" className="logo" />
-    <LogoComponent  className="logo" />
-  </div>
-);
-```
-
-### Основные скрипты
-
-- Запуск dev-сервера:
-
-```
-yarn dev
-```
-
-- Сборка:
-
-```
-yarn build
-```
-
-- Запуск eslint:
-
-```
+```bash
+yarn tsc:check
 yarn lint
-```
-
-или
-
-```
-yarn lint:fix
-```
-
-- Запуск stylelint:
-
-```
 yarn stylelint
 ```
 
-или
+Проверка TypeScript, JavaScript/TypeScript и стилей.
 
-```
-yarn stylelint:fix
+```bash
+yarn format
 ```
 
-- Запуск ts:
+Автоисправление lint- и stylelint-ошибок.
 
+```bash
+yarn vk-tunnel
 ```
-yarn tsc:check
+
+Запуск локального туннеля для интеграции с окружением Max.
+
+## Сборка
+
+После `yarn build` готовый сайт появляется в папке `public/`.
+
+## Структура проекта
+
+```text
+src/
+  components/        общие UI-компоненты и layout
+  config/            маршруты и общие настройки
+  pages/             страницы приложения
+  store/             MobX-хранилища
+  styles/            глобальные стили и переменные
+  types/             общие типы
+  utils/             утилиты и хуки
+api/
+  parser/            серверные обработчики для событий
+static/
+  parser-events-cache.json
+  static/            ассеты и изображения
+docs/                инструкции по проекту и данным
 ```
+
+## Примечания
+
+- `public/` - результат сборки, его можно размещать на хостинге или использовать для публикации.
+  
+
