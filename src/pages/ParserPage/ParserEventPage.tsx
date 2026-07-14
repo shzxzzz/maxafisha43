@@ -113,9 +113,11 @@ const ParserEventPage: React.FC = () => {
             <Typography tag="label" size="large" weight="medium" className={s.hero__metaDate}>
               {eventItem.date}
             </Typography>
-            <Typography tag="label" size="large" color="secondary" className={s.hero__metaTime}>
-              {eventItem.time}
-            </Typography>
+            {eventItem.time ? (
+              <Typography tag="label" size="large" color="secondary" className={s.hero__metaTime}>
+                {eventItem.time}
+              </Typography>
+            ) : null}
           </div>
           <Typography tag="headline" size="large" weight="strong" className={s.hero__title}>
             {eventItem.title}

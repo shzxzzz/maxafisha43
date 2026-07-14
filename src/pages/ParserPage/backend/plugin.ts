@@ -16,9 +16,10 @@ const handleRequest = async (request: import('http').IncomingMessage, response: 
   const url = new URL(request.url, 'http://localhost');
   const { pathname } = url;
   const eventsBasePath = '/api/parser/events';
+  const dateFilter = url.searchParams.get('date') ?? undefined;
 
   if (pathname === eventsBasePath) {
-    const items = await getParserEvents();
+    const items = await getParserEvents(dateFilter, Boolean(dateFilter));
     sendJson(200, { items }, response);
 
     return true;

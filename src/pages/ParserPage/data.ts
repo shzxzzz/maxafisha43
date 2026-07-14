@@ -38,8 +38,15 @@ const parseJsonResponse = async <T>(response: Response): Promise<T> => {
   return response.json() as Promise<T>;
 };
 
-export const fetchParserEvents = async (): Promise<TEventItem[]> => {
-  const response = await fetch(`${API_BASE}/events`);
+export const fetchParserEvents = async (date?: string): Promise<TEventItem[]> => {
+  const searchParams = new URLSearchParams();
+
+  if (date) {
+    searchParams.set('date', date);
+  }
+
+  const queryString = searchParams.toString();
+  const response = await fetch(queryString ? `${API_BASE}/events?${queryString}` : `${API_BASE}/events`);
   const data = await parseJsonResponse<TParserEventsResponse>(response);
 
   return data.items;

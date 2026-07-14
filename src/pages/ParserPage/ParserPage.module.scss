@@ -5,6 +5,34 @@
     display: grid;
     gap: 12px;
 
+    &__dates {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    &__datesTrack {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__nav {
+      flex-shrink: 0;
+    }
+
+    &__searchRow {
+      display: grid;
+      gap: 10px;
+    }
+
     &__description {
       max-width: 48ch;
     }
@@ -12,6 +40,66 @@
     &__search {
       width: 100%;
     }
+
+    &__resetDate {
+      justify-self: start;
+    }
+  }
+}
+
+.dateGroup {
+  display: grid;
+  gap: 8px;
+  flex-shrink: 0;
+
+  &__month {
+    padding-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__days {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.dateItem {
+  display: grid;
+  min-width: 54px;
+  justify-items: center;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--text-primary);
+  cursor: pointer;
+
+  @include animate((transform, background-color, color));
+
+  &:hover {
+    transform: translateY(-1px);
+    background: rgba(15, 23, 42, 0.08);
+  }
+
+  &_active {
+    background: linear-gradient(180deg, #1f6feb 0%, #1557c0 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 18px rgba(21, 87, 192, 0.22);
+  }
+
+  &__day {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__weekday {
+    font-size: 11px;
+    line-height: 1;
+    text-transform: uppercase;
+    opacity: 0.85;
   }
 }
 
@@ -155,6 +243,19 @@
 }
 
 @include desktop {
+  .root {
+    .header {
+      &__searchRow {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+      }
+
+      &__dates {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+      }
+    }
+  }
+
   .content {
     padding: 0 16px 16px;
   }
@@ -166,5 +267,24 @@
   .card {
     min-height: 260px;
     padding: 20px;
+  }
+
+  .dateItem {
+    min-width: 60px;
+  }
+}
+
+@media (width < 687px) {
+  .root {
+    .header {
+      &__dates {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+      }
+    }
+  }
+
+  .dateItem {
+    min-width: 50px;
+    padding: 10px 10px;
   }
 }
